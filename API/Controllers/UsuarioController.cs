@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +15,13 @@ namespace API.Controllers
     public class UsuarioController : BaseApiController
     {
         private readonly ApplicationDbContext _db;
+        private readonly ITokenServicio _tokenServicio;
 
-        public UsuarioController(ApplicationDbContext db)
+        public UsuarioController(ApplicationDbContext db, ITokenServicio tokenServicio)
         {
             _db = db;
+            _tokenServicio = tokenServicio;
+
         }
 
         [HttpGet] // api/usuario y retorna una lista de usuarios
@@ -35,7 +39,7 @@ namespace API.Controllers
         }
 
         [HttpPost("registro")] //POST: api/usuario/registro
-        public async Task<ActionResult<Usuario>> Registro(RegistroDto registroDto)
+        public async Task<ActionResult<UsuarioDto>> Registro(RegistroDto registroDto)
         {
             if (await UsuarioExiste(registroDto.Username)) return BadRequest("Username ya esta registrado");
 
@@ -48,11 +52,15 @@ namespace API.Controllers
             };
             _db.Usuarios.Add(usuario);
             await _db.SaveChangesAsync();
-            return usuario;
+            return new UsuarioDto
+            {
+                Username = usuario.Username,
+                Token = _tokenServicio.CrearToken(usuario)
+            };
         }
 
         [HttpPost("login")]  //api/usuario/login
-        public async Task<ActionResult<Usuario>> Login(LoginDto loginDto)
+        public async Task<ActionResult<UsuarioDto>> Login(LoginDto loginDto)
         {
             var usuario = await _db.Usuarios.SingleOrDefaultAsync(x => x.Username == loginDto.Username);
             if (usuario == null) return Unauthorized("Usuario no valido");
@@ -63,7 +71,11 @@ namespace API.Controllers
                 if (computedHash[i] != usuario.PasswordHash[i]) return Unauthorized("Password no valido");
             }
 
-            return usuario;
+            return new UsuarioDto
+            {
+                Username = usuario.Username,
+                Token = _tokenServicio.CrearToken(usuario)
+            };
         }
 
         private async Task<bool> UsuarioExiste(string username)
