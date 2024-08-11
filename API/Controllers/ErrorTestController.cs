@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using API.Errores;
+using Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models.Entidades;
@@ -25,7 +26,7 @@ namespace API.Controllers
         public ActionResult<Usuario> GetNotFound()
         {
             var objeto = _db.Usuarios.Find(-1);
-            if (objeto == null) return NotFound();
+            if (objeto == null) return NotFound(new ApiErrorResponse(404));
             return objeto;
         }
 
@@ -41,7 +42,7 @@ namespace API.Controllers
         public ActionResult<string> GetBadRequest()
         {
 
-            return BadRequest("La solicitud no es valida - bad request ");
+            return BadRequest(new ApiErrorResponse(400));
         }
 
 

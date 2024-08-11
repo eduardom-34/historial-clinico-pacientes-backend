@@ -1,12 +1,6 @@
 using API.Extensiones;
-using Data;
-using Data.Interfaces;
-using Data.Servicios;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using System.Text;
+using API.Middleware;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,11 +10,12 @@ builder.Services.AddControllers();
 builder.Services.AgregarServiciosAplicacion(builder.Configuration);
 builder.Services.AgregarServiciosIdentidad(builder.Configuration);
 
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
+app.UseMiddleware<ExceptionMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
