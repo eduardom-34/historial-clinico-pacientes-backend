@@ -41,7 +41,7 @@ namespace API.Controllers
         public ActionResult<string> GetBadRequest()
         {
 
-            return BadRequest("La solicitud no es valida - bad request");
+            return BadRequest("La solicitud no es valida - bad request ");
         }
 
 
