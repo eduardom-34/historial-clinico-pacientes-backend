@@ -11,7 +11,7 @@ namespace Data.Interfaces.IRepositorio
     {
         Task<IEnumerable<T>> ObtenerTodos(
             Expression<Func<T, bool>> Filtro = null,
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderby = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
             string incluirPropiedades = null // Include
             );
 
@@ -21,6 +21,6 @@ namespace Data.Interfaces.IRepositorio
             );
 
         Task Agregar(T entidad);
-        void Remove(T entidad);
+        void Remover(T entidad);
     }
 }

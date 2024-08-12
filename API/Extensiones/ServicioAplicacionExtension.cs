@@ -8,6 +8,8 @@ using API.Errores;
 using Data.Interfaces.IRepositorio;
 using Data.Repositorio;
 using Utilidades;
+using BLL.Servicios.Interfaces;
+using BLL.Servicios;
 
 namespace API.Extensiones
 {
@@ -67,6 +69,8 @@ namespace API.Extensiones
 
             services.AddScoped<IUnidadTrabajo, UnidadTrabajo>();
             services.AddAutoMapper(typeof(MappingProfile));
+
+            services.AddScoped<IEspecialidaServicio, EspecialidadServicio>();
 
             return services;
 

@@ -69,7 +69,7 @@ namespace Data.Repositorio
 
         }
 
-        public void Remove(T entidad)
+        public void Remover(T entidad)
         {
             _dbSet.Remove(entidad);
         }
