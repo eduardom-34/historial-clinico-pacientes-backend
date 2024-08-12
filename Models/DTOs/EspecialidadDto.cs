@@ -5,24 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models.Entidades
+namespace Models.DTOs
 {
-    public class Especialidad
+    public class EspecialidadDto
     {
-        [Key]
         public int Id { get; set; }
 
         [Required]
         [StringLength(60, MinimumLength = 1, ErrorMessage = "El nombre debe ser minimo 1 y max 60 caracteres")]
-        public string NombreEspecialidad {  get; set; }
+        public string NombreEspecialidad { get; set; }
 
         [Required]
         [StringLength(100, MinimumLength = 1, ErrorMessage = "El nombre debe ser minimo 1 y max 100 caracteres")]
         public string Descripcion { get; set; }
 
-        public bool Estado {  get; set; }
-
-        public DateTime FechaCreacion { get; set; }
-        public DateTime FechaActualizacion { get; set; } 
+        public int Estado { get; set; } //1 - 0
     }
 }
