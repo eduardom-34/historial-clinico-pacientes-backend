@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Data.Interfaces.IRepositorio
 {
-    internal interface IEspecialidadRepositorio : IRepositorioGenerico<Especialidad>
+     public interface IEspecialidadRepositorio : IRepositorioGenerico<Especialidad>
     {
         void Actualizar(Especialidad especialidad);
     }

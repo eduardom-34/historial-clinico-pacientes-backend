@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Data.Interfaces.IRepositorio
 {
-    internal interface IRepositorioGenerico<T> where T : class
+    public interface IRepositorioGenerico<T> where T : class
     {
         Task<IEnumerable<T>> ObtenerTodos(
             Expression<Func<T, bool>> Filtro = null,
