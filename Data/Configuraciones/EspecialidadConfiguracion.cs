@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Data.Configuraciones
 {
-    internal class EspecialidadConfiguracion : IEntityTypeConfiguration<Especialidad>
+    public class EspecialidadConfiguracion : IEntityTypeConfiguration<Especialidad>
     {
         public void Configure(EntityTypeBuilder<Especialidad> builder)
         {
