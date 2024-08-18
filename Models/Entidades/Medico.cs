@@ -29,10 +29,9 @@ namespace Models.Entidades
         public string Telefono { get; set; }
 
         [Required(ErrorMessage = "Genero es Requerido")]
-        [StringLength(1, ErrorMessage = "Genero debe ser Minimo 1 max 1 caracteres")]
         public char Genero { get; set; }
 
-        [Required(ErrorMessage = "Especialidad es Requerido")]
+        [Required(ErrorMessage = "Especialidad es Requerida")]
         public int EspecialidadId { get; set; }
 
         [ForeignKey("EspecialidadId")]

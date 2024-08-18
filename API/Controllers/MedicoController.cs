@@ -6,14 +6,14 @@ using System.Net;
 
 namespace API.Controllers
 {
-    public class EspecialidadController : BaseApiController
+    public class MedicoController : BaseApiController
     {
-        private readonly IEspecialidaServicio _especialidadServicio;
+        private readonly IMedicoServicio _medicoServicio;
         private ApiResponse _response;
 
-        public EspecialidadController(IEspecialidaServicio especialidadServicio)
+        public MedicoController(IMedicoServicio medicoServicio)
         {
-            _especialidadServicio = especialidadServicio;
+            _medicoServicio = medicoServicio;
             _response = new();
         }
 
@@ -22,7 +22,7 @@ namespace API.Controllers
         {
             try
             {
-                _response.Resultado = await _especialidadServicio.ObtenerTodos();
+                _response.Resultado = await _medicoServicio.ObtenerTodos();
                 _response.IsExitoso = true;
                 _response.StatusCode = HttpStatusCode.OK;
             }
@@ -37,11 +37,11 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Crear(EspecialidadDto modeloDto)
+        public async Task<IActionResult> Crear(MedicoDto modeloDto)
         {
             try
             {
-                await _especialidadServicio.Agregar(modeloDto);
+                await _medicoServicio.Agregar(modeloDto);
                 _response.IsExitoso = true;
                 _response.StatusCode = HttpStatusCode.Created;
             }
@@ -56,11 +56,11 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Editar(EspecialidadDto modeloDto)
+        public async Task<IActionResult> Editar(MedicoDto modeloDto)
         {
             try
             {
-                await _especialidadServicio.Actualizar(modeloDto);
+                await _medicoServicio.Actualizar(modeloDto);
                 _response.IsExitoso = true;
                 _response.StatusCode = HttpStatusCode.NoContent;
             }
@@ -78,7 +78,7 @@ namespace API.Controllers
         {
             try
             {
-                await _especialidadServicio.Remover(id);
+                await _medicoServicio.Remover(id);
                 _response.IsExitoso = true;
                 _response.StatusCode = HttpStatusCode.NoContent;
             }

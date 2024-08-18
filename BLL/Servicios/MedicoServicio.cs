@@ -27,7 +27,7 @@ namespace BLL.Servicios
         {
             try
             {
-                Medico medico= new Medico
+                Medico medico = new Medico
                 {
                     Apellidos = modeloDto.Apellidos,
                     Nombres = modeloDto.Nombres,
@@ -96,7 +96,7 @@ namespace BLL.Servicios
         {
             try
             {
-                var lista = await _unidadTrabajo.Medico.ObtenerTodos(
+                var lista = await _unidadTrabajo.Medico.ObtenerTodos( incluirPropiedades:"Especialidad",
                                     orderBy: e => e.OrderBy(e => e.Apellidos));
                 return _mapper.Map<IEnumerable<MedicoDto>>(lista);
             }

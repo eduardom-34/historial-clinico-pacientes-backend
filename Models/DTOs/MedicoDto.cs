@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace Models.DTOs
 {
@@ -29,11 +30,11 @@ namespace Models.DTOs
         public string Telefono { get; set; }
 
         [Required(ErrorMessage = "Genero es Requerido")]
-        [StringLength(1, ErrorMessage = "Genero debe ser Minimo 1 max 1 caracteres")]
         public char Genero { get; set; }
 
         [Required(ErrorMessage = "Especialidad es Requerido")]
         public int EspecialidadId { get; set; }
+
 
         public string NombreEspecialidad { get; set; }
 
