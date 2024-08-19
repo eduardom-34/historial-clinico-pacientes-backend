@@ -46,12 +46,12 @@ namespace API.Controllers
         {
             if (await UsuarioExiste(registroDto.Username)) return BadRequest("Username ya esta registrado");
 
-            using var hmac = new HMACSHA512();
+            //using var hmac = new HMACSHA512();
             var usuario = new Usuario()
             {
                 Username = registroDto.Username.ToLower(),
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registroDto.Password)),
-                PasswordSalt = hmac.Key
+                //PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registroDto.Password)),
+                //PasswordSalt = hmac.Key
             };
             _db.Usuarios.Add(usuario);
             await _db.SaveChangesAsync();
@@ -68,11 +68,12 @@ namespace API.Controllers
             var usuario = await _db.Usuarios.SingleOrDefaultAsync(x => x.Username == loginDto.Username);
             if (usuario == null) return Unauthorized("Usuario no valido");
             using var hmac = new HMACSHA512(usuario.PasswordSalt);
-            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
-            for (int i = 0; i < computedHash.Length; i++)
+            //var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
+            /*for (int i = 0; i < computedHash.Length; i++)
             {
                 if (computedHash[i] != usuario.PasswordHash[i]) return Unauthorized("Password no valido");
             }
+            */
 
             return new UsuarioDto
             {
