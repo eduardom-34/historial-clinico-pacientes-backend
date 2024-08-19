@@ -35,6 +35,24 @@ namespace API.Controllers
 
             return Ok( _response );
         }
+        [HttpGet("ListadoActivos")]
+        public async Task<IActionResult> GetActivos()
+        {
+            try
+            {
+                _response.Resultado = await _especialidadServicio.ObtenerActivos();
+                _response.IsExitoso = true;
+                _response.StatusCode = HttpStatusCode.OK;
+            }
+            catch (Exception ex)
+            {
+                _response.IsExitoso = false;
+                _response.Message = ex.Message;
+                _response.StatusCode = HttpStatusCode.BadRequest;
+            }
+
+            return Ok( _response );
+        }
 
         [HttpPost]
         public async Task<IActionResult> Crear(EspecialidadDto modeloDto)
