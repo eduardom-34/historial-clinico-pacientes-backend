@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Models.DTOs;
 using Models.Entidades;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
@@ -18,11 +19,16 @@ namespace API.Controllers
     {
         private readonly UserManager<UsuarioAplicacion> _userManager;
         private readonly ITokenServicio _tokenServicio;
+        private ApiResponse _response;
+        private readonly RoleManager<RolAplicacion> _rolManager;
 
-        public UsuarioController(UserManager<UsuarioAplicacion> userManager, ITokenServicio tokenServicio)
+        public UsuarioController(UserManager<UsuarioAplicacion> userManager, ITokenServicio tokenServicio, RoleManager<RolAplicacion> roleManager)
         {
             _userManager = userManager;
             _tokenServicio = tokenServicio;
+            _response = new();
+            _rolManager = roleManager;
+
 
         }
 
@@ -90,6 +96,18 @@ namespace API.Controllers
                 Username = usuario.UserName,
                 Token = await _tokenServicio.CrearToken(usuario)
             };
+        }
+
+        [Authorize(Policy = "AdminRol")]
+        [HttpGet("ListadoRoles")]
+        public IActionResult GetRoles()
+        {
+            var roles = _rolManager.Roles.Select(r => new { NombreRol = r.Name }).ToList();
+            _response.Resultado = roles;
+            _response.IsExitoso = true;
+            _response.StatusCode = HttpStatusCode.OK;
+
+            return Ok(_response);
         }
 
         private async Task<bool> UsuarioExiste(string username)
