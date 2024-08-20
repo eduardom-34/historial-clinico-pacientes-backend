@@ -45,6 +45,7 @@ namespace API.Controllers
         }
         */
 
+        [Authorize(Policy = "AdminRol")]
         [HttpPost("registro")] //POST: api/usuario/registro
         public async Task<ActionResult<UsuarioDto>> Registro(RegistroDto registroDto)
         {
