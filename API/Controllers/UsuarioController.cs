@@ -32,15 +32,27 @@ namespace API.Controllers
 
         }
 
-        /*
+        [Authorize(Policy = "AdminRol")]
         [Authorize]
         [HttpGet] // api/usuario y retorna una lista de usuarios
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
+        public async Task<ActionResult> GetUsuarios()
         {
-            var usuarios = await _db.Usuarios.ToListAsync();
-            return Ok(usuarios);
+            var usuarios = await _userManager.Users.Select(u => new UsuarioListaDto()
+            {
+                Username = u.UserName,
+                Apellidos = u.Apellidos,
+                Nombres = u.Nombres,
+                Email = u.Email,
+                Rol = string.Join(",", _userManager.GetRolesAsync(u).Result.ToArray())
+            }).ToListAsync();
+            _response.Resultado = usuarios;
+            _response.IsExitoso = true;
+            _response.StatusCode = HttpStatusCode.OK;
+            return Ok(_response);
         }
-        */
+        
+
+
         /*
         [Authorize]
         [HttpGet("{id}")] // api/usuario/1
