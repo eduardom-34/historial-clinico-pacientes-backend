@@ -20,6 +20,17 @@ namespace Data.Configuraciones
             builder.Property(x => x.Telefono).IsRequired(false).HasMaxLength(40);
             builder.Property(x => x.Genero).IsRequired().HasColumnType("char").HasMaxLength(1);
             builder.Property(x => x.Estado).IsRequired();
+            builder.Property(x => x.CreadoPorId).IsRequired(false);
+            builder.Property(x => x.ActualizadoPorId).IsRequired(false);
+
+            /*Relaciones*/
+            builder.HasOne(x => x.CreadoPor).WithMany()
+                .HasForeignKey(x => x.CreadoPorId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(x => x.ActualizadoPor).WithMany()
+                .HasForeignKey(x => x.ActualizadoPorId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
