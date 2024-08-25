@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Models.DTOs;
 using Models.Entidades;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,11 @@ namespace Data
         public DbSet<Especialidad> Especialidades { get; set; }
 
         public DbSet<Medico> Medicos { get; set; }
+
+        public DbSet<Paciente> Pacientes { get; set; }
+        public DbSet<HistoriaClinica> HistoriasClinicas { get; set; }
+
+        public DbSet<Antecedente> Antecedentes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
